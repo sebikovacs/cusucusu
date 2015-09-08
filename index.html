@@ -6,27 +6,146 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
   <title>CusuCusu.ro - hrana pentru caini si pisici</title>
 
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
   <style>
-    body {
-      font-family: 'Roboto', Helvetica, Arial, Lucida, sans-serif;
+
+    .header {
       text-align: center;
     }
-    h2 {
+
+    body {
+      font-family: 'Roboto', Helvetica, Arial, Lucida, sans-serif;
       
+    }
+    h2 {
+      font-weight: bold;
       font-size: 57px;
       color: #4779B8;
+      margin-top: 100px;
+    }
+
+    .btn-submit {
+      margin: 0 auto;
+      display: block;
+      width: 50%;
     }
     
+    .alert-danger, .alert-success {display: none;}
 
   </style>
 </head>
 <body>
-  <h2>CusuCusu.ro</h2>
-  <h1>Hrana pentru caini si pisici livrata periodic</h1>
-  <p>O data pe luna iti trimitem acasa pachetul cu mancarea preferata a animalelor tale de companie.</p>
-  <div class="img">
-    <!-- <img src="painting-287403_1280.jpg" alt=""> -->
-  </div>
+  <div class="container">
+    
+    <div class="header">
+      <h2>CusuCusu.ro</h2>
+      
+      <h1>Hrana pentru caini si pisici livrata periodic.</h1>
+      
+      <p>In curand vom livram si in orasul tau. Lasa-ne o adresa de mail si te vom contacta numaidecat.</p>
+    </div>
 
+    <div class="row">
+      
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="alert alert-danger alert-email">
+          <p> Va rugam sa completati cu campul adresei de email</p>
+        </div>
+
+        <div class="alert alert-success ">
+          <p>Va multumim. Va vom contacta de cum serviciile noastre vor deveni disponibile in orasul dumneavoastra.</p>
+        </div>
+
+        <form action="" class="cc-email-form">
+          
+          <div class="form-group">
+            
+            <label for="">Emailul tau:</label>
+
+            <input type="email" name="email" id="" class="cc-email form-control">
+
+          </div>
+
+          <div class="form-group">
+            
+            <label for="">Orasul tau (optional):</label>
+
+            <input type="text" name="city" id="" class="form-control cc-city">
+
+          </div>
+          
+          <a href="" class="btn btn-xl btn-primary btn-submit">Trimite</a>
+        </form>
+
+      </div>
+
+    </div>
+    
+    <div class="img">
+      <!-- <img src="painting-287403_1280.jpg" alt=""> -->
+    </div>
+
+  </div>
+  
+  <script>
+
+  $(function () {
+    var myDataRef = new Firebase('https://blistering-fire-1457.firebaseio.com');
+
+    // $.getJSON( "cities.json", function( data ) {
+    //   var items = [];
+
+    //   $.each( data, function( item ) {
+    //     items.push( '<option value="' + item.NUME + '">' + item.NUME + '</option>' );
+    //   });
+
+    //   $('#cities').html(items.join( '' ));
+
+    // });
+
+    $('.btn-submit').on('click', function (e) {
+      e.preventDefault();
+
+      var email = $('.cc-email').val();
+      var city = $('.cc-city').val();
+
+      if (!email) {
+        console.log('dsa');
+        $('.alert-danger').show();
+      }
+
+      if (email.length) {
+        console.log('good');
+        myDataRef.push({email: email, city: city || ''});
+
+        // hide form
+        $('.alert-danger').hide();
+        $('.cc-email-form').hide();
+        $('.alert-success').show();
+      }
+      // if (email) {
+      //   
+
+      // } else {
+
+      //   console.log('bad');
+        
+      // }
+
+    });
+
+    
+    // var name = 'sebi';
+    // var email = 'sebi.kovacs+' + parseInt(Math.random() * 10000) + '@gmail.com';
+    // myDataRef.push({user: name, email: email});
+  });
+    
+  </script>
 </body>
 </html>
